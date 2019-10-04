@@ -1,5 +1,5 @@
 const LocalStrategy = require('passport-local')
-const User = require('./../models/administrador')
+const Administrador = require('./../models/administrador')
 
 module.exports = (passport) => {
 
@@ -8,7 +8,7 @@ module.exports = (passport) => {
     })
 
     passport.deserializeUser((id, cb) => {
-        User
+        Administrador
             .findById(id)
             .then(user => cb(null, user))
             .catch(err => cb(err, {}))
@@ -20,23 +20,21 @@ module.exports = (passport) => {
         passReqToCallback: true
     }, 
     function(req, username, password, cb) {
-        User
+        Administrador
             .findOne({ username: username })
             .then((userExists) => {
                 if (!userExists) {
                     let user = new User(req.body)
 
-                    user.password = user.genHash(user.password)
-
                     return user
-                                .save()
-                                .then((user) => {
-                                    return cb(null, user)
-                                })
-                                .catch((error) => {
-                                    console.log(error)
-                                    return
-                                })                    
+                            .save()
+                            .then((user) => {
+                                return cb(null, user)
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                                return
+                            })                    
                 }
 
                 return cb(null, false)
