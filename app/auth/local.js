@@ -1,16 +1,16 @@
-const LocalStrategy = require('passport-local')
+const LocalStrategy = require('passport-local').Strategy
 const Administrador = require('./../models/administrador')
 
 module.exports = (passport) => {
 
-    passport.serializeUser((user, cb) => {
-        return cb(null, user._id)
+    passport.serializeUser((administrador, cb) => {
+        return cb(null, administrador._id)
     })
 
     passport.deserializeUser((id, cb) => {
         Administrador
             .findById(id)
-            .then(user => cb(null, user))
+            .then(administrador => cb(null, administrador))
             .catch(err => cb(err, {}))
     })
 
@@ -24,17 +24,16 @@ module.exports = (passport) => {
             .findOne({ username: username })
             .then((userExists) => {
                 if (!userExists) {
-                    let user = new User(req.body)
-
-                    return user
-                            .save()
-                            .then((user) => {
-                                return cb(null, user)
+                        Administrador
+                            .create(req.body)
+                            .then((admin) => {
+                                return cb(null, admin)
                             })
                             .catch((error) => {
-                                console.log(error)
+                                console.log( error)
                                 return
-                            })                    
+
+                            })               
                 }
 
                 return cb(null, false)
