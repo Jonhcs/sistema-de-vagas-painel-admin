@@ -15,4 +15,5 @@ const Administrador = new mongoose.Schema ({
     }
 })
 
+
 module.exports = mongoose.model('Administrador', Administrador)

@@ -1,17 +1,18 @@
 const express = require('express')
 const router = express.Router()
 const administrador = require('./../controller/admin/index')
+const verifica = require('./../auth/middleware')
 
 module.exports = (passport) => {  
-    router.get('/', administrador.index)
-    router.get('/new', administrador.new)
-    router.post('/', passport.authenticate('local-signup', {
+    router.get('/', verifica,administrador.index)
+    router.get('/new', verifica, administrador.new)
+    router.post('/',verifica, passport.authenticate('local-signup', {
         successRedirect: '/admin',
-        failureRedirect: '/'
+        failureRedirect: '/cadastro/new',
     }))
     //router.post('/', administrador.create)
-    router.get('/:id', administrador.show)
-    router.delete('/:id', administrador.remove)
+    router.get('/:id', verifica, administrador.show)
+    router.delete('/:id',verifica, administrador.remove)
 
     return router
 }

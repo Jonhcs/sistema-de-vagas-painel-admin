@@ -19,6 +19,7 @@ module.exports = {
             administrador: new Administrador()
         })
     },
+    /*
     create(req, res) {
         Administrador
             .create(req.body)
@@ -30,6 +31,7 @@ module.exports = {
                 return
             })
     },
+    */
     remove(req, res) {
         Aluno
             .findByIdAndRemove(req.params.id)
