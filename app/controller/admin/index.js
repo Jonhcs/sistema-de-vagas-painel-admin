@@ -7,6 +7,8 @@ module.exports = {
             .find({})
             .then((alunos) => {
                 return res.render('admin/index', {
+                    title:'Freelancer with Danilo',
+                    layout: 'layouts/base',
                     alunos
                 })
             })
@@ -16,6 +18,8 @@ module.exports = {
     },
     new(req, res) {
         return res.render('admin/new', {
+            title:'Freelancer with Danilo',
+            layout: 'layouts/base',
             administrador: new Administrador()
         })
     },
@@ -44,6 +48,8 @@ module.exports = {
             .findById(req.params.id)
             .then( (aluno) => {
                 return res.render('admin/show', {
+                    title:'Freelancer with Danilo',
+                    layout: 'layouts/base',
                     title: "Dados de contato com o Dev",
                     aluno: aluno
                 })
